@@ -9,10 +9,20 @@
 //THEN the game is over
 //WHEN the game is over
 //THEN I can save my initials and my score
-
-var timerCount ; 
+var header = document.getElementById("header");
+var timerCount = document.getElementById("timer-count"); 
 var timer ; 
-var startButton = document.queryselector("start-button")
+var startButton = document.querySelector("start-button"); 
+var title = document.querySelector("title");
+var description = document.querySelector("description"); 
+var score = 0; 
+var penalty = 10; 
+var choiceA = document.getElementById("choice-A"); 
+var choiceB = document.getElementById("choice-B"); 
+var choiceC = document.getElementById("choice-C");
+var choiceD = document.getElementById("choice-D"); 
+var answerCheck = document.querySelector("answer-check");
+var questionTitle = document.getElementById("question-title");
 var questionSource = [ 
     { question: "Question 1 = What does HTML stand for?", 
     choices: ["A. Handy Tools Made for Learning", "B. Huge Task Made Last", "C. HyperText Markup Language", "D. Higher Tasks Might Learn"],
@@ -54,39 +64,69 @@ var questionSource = [
 
 ] 
 
-function startGame () {  
-  countdown(); 
-  timeInterval = setInterval(startTimer, 1000);
-    insertQuestion();
-}; 
+
 
 
 
 function countdown() {
-  var timeLeft = 60;
+  var timeLeft = 80;
 
   var timeInterval = setInterval(function () {
-    // As long as the `timeLeft` is greater than 1
+    
     if (timeLeft > 1) {
-      // Set the `textContent` of `timerEl` to show the remaining seconds
-      timerEl.textContent = timeLeft + ' seconds remaining';
-      // Decrement `timeLeft` by 1
+      
+      timerCount.textContent = timeLeft + ' seconds remaining';
       timeLeft--;
     } else if (timeLeft === 1) {
-      // When `timeLeft` is equal to 1, rename to 'second' instead of 'seconds'
-      timerEl.textContent = timeLeft + ' second remaining';
+      timerCount.textContent = timeLeft + ' second remaining';
       timeLeft--;
     } else {
-      // Once `timeLeft` gets to 0, set `timerEl` to an empty string
-      timerEl.textContent = '';
-      // Use `clearInterval()` to stop the timer
+     
+      timerCount.textContent = '';
+      
       clearInterval(timeInterval);
-      // Call the `displayMessage()` function
+      
       displayMessage();
     }
   }, 1000);
 
 
 }; 
+
+function nextQuestion() {
+  questionTitle.textContent = questionSource[questionIndex].question;
+  choiceA.textContent = questionSource[questionIndex].choices[0];
+  choiceB.textContent = questionSource[questionIndex].choices[1];
+  choiceC.textContent = questionSource[questionIndex].choices[2];
+  choiceD.textContent = questionSource[questionIndex].choices[3];
+}; 
+
+function insertQuestion() { 
+  header.style.display = "none";
+  questionTitle.style.display = "block"; 
+};
+
+function startGame () {  
+   
+  countdown(); 
+  insertQuestion();
+  for (i = 0; i < questionSource.length; i ++) { 
+    var response = questionSource[i].question; 
+    if (response = questionSource[i].answer) { 
+      score++; 
+      answerCheck.textContent = ("Correct!");
+    } else {
+      timeLeft -= 10; 
+      answerCheck.textContent = ("Incorrect :/"); 
+    }
+  }
+  timeInterval = setInterval(startTimer, 1000);
+  
+
+
+}; 
+
+
+
 
 startButton.eventListener("click", startGame);

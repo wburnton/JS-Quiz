@@ -8,55 +8,29 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body> 
-    <header> 
-        <h2> Coding Quiz Challenge </h2>
-        <h3> Answer the code-related questions within the time limit. Incorrect answers will affect the score/time by ten seconds. Good luck!</h3>
-        <button class = "start-button"> Start </button>
+    <div id = "timer-count"> </div>
+    <a class = "highscore" href = "#"> View Highscore</a>
+    
+    <header id = "header"> 
+        <h2 class = "title"> Coding Quiz Challenge </h2>
+        <h3 class = "description"> Answer the code-related questions within the time limit. Incorrect answers will affect the score/time by ten seconds. Good luck!</h3>
+        <button class = "start-button"> Start </button> 
+        
     </header>
     <main> 
        
-        <section> 
-            <div class ="question"> <h3></h3> </div> 
-            <div class = "answers"> </div>
-        </section> 
-
-        <section> 
-            <div class ="question"> <h3> </h3> </div> 
-            <div class = "answers"> </div>
-        </section> 
-
-        <section> 
-            <div class ="question"> <h3> </h3> </div> 
-            <div class = "answers"> </div>
-        </section> 
-
-        <section> 
-            <div class ="question"> <h3> </h3> </div> 
-            <div class = "answers"> </div>
-        </section>  
-
-        <section> 
-            <div class ="question"> <h3> </h3> </div> 
-            <div class = "answers"> </div>
-        </section>  
-         
-        <section> 
-            <div class ="question"> <h3> </h3> </div> 
-            <div class = "answers"> </div>
-        </section>  
-
-        <section> 
-            <div class ="question"> <h3> </h3> </div> 
-            <div class = "answers"> </div>
-        </section> 
-
-        <section> 
-            <div class ="question"> <h3> </h3> </div> 
-            <div class = "answers"> </div>
-        </section> 
-
+        <div id="questionDiv" >
+            <ul id="questionTitle" >
+                <li><button id="choice-A" class="btn"></button></li>
+                <li><button id="choice-B" class="btn"></button></li>
+                <li><button id="choice-C" class="btn"></button></li>
+                <li><button id="choice-D" class="btn"></button></li>
+                
+                <p id="answer-check" style="display: none;"></p>
+            </ul>
+          </div>
 
     </main>
-    
+   <script> src = "script.js" </script> 
 </body>
 </html>
