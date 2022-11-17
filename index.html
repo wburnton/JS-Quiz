@@ -11,7 +11,7 @@
     <div id = "timer-count"> </div>
     <a class = "highscore" href = "#"> View Highscore</a>
     
-    <header id = "header"> 
+    <header id = "header" style="display: block;"> 
         <h2 class = "title"> Coding Quiz Challenge </h2>
         <h3 class = "description"> Answer the code-related questions within the time limit. Incorrect answers will affect the score/time by ten seconds. Good luck!</h3>
         <button class = "start-button"> Start </button> 
@@ -19,18 +19,24 @@
     </header>
     <main> 
        
-        <div id="questionDiv" >
-            <ul id="questionTitle" >
+        
+            <ul id="questionTitle" style="display: none;" >
                 <li><button id="choice-A" class="btn"></button></li>
                 <li><button id="choice-B" class="btn"></button></li>
                 <li><button id="choice-C" class="btn"></button></li>
                 <li><button id="choice-D" class="btn"></button></li>
                 
-                <p id="answer-check" style="display: none;"></p>
+                <p id="answer-check"></p>
             </ul>
-          </div>
+          </div> 
+
+        <section style="display: none"> 
+            <label> "Enter your initals and save your Highscore!</label>
+            <input type="text" name="intials" id="intials"/> 
+            
+        </section>
 
     </main>
-   <script> src = "script.js" </script> 
+   <script src="script.js">  </script> 
 </body>
 </html>

@@ -12,17 +12,20 @@
 var header = document.getElementById("header");
 var timerCount = document.getElementById("timer-count"); 
 var timer ; 
-var startButton = document.querySelector("start-button"); 
+var startButton = document.querySelector(".start-button"); 
 var title = document.querySelector("title");
 var description = document.querySelector("description"); 
-var score = 0; 
-var penalty = 10; 
+var initialsInput = document.querySelector("initials"); 
+var score = 0;  
+var timeLeft = 80; 
+var questionIndex = 0; 
 var choiceA = document.getElementById("choice-A"); 
 var choiceB = document.getElementById("choice-B"); 
 var choiceC = document.getElementById("choice-C");
 var choiceD = document.getElementById("choice-D"); 
-var answerCheck = document.querySelector("answer-check");
-var questionTitle = document.getElementById("question-title");
+var answerCheck = document.getElementById("answer-check");
+var questionTitle = document.getElementById("#question-title");
+
 var questionSource = [ 
     { question: "Question 1 = What does HTML stand for?", 
     choices: ["A. Handy Tools Made for Learning", "B. Huge Task Made Last", "C. HyperText Markup Language", "D. Higher Tasks Might Learn"],
@@ -64,15 +67,9 @@ var questionSource = [
 
 ] 
 
-
-
-
-
 function countdown() {
-  var timeLeft = 80;
-
+  
   var timeInterval = setInterval(function () {
-    
     if (timeLeft > 1) {
       
       timerCount.textContent = timeLeft + ' seconds remaining';
@@ -83,33 +80,50 @@ function countdown() {
     } else {
      
       timerCount.textContent = '';
-      
       clearInterval(timeInterval);
       
-      displayMessage();
+     
     }
   }, 1000);
 
 
 }; 
 
-function nextQuestion() {
-  questionTitle.textContent = questionSource[questionIndex].question;
-  choiceA.textContent = questionSource[questionIndex].choices[0];
-  choiceB.textContent = questionSource[questionIndex].choices[1];
-  choiceC.textContent = questionSource[questionIndex].choices[2];
-  choiceD.textContent = questionSource[questionIndex].choices[3];
-}; 
+
 
 function insertQuestion() { 
   header.style.display = "none";
-  questionTitle.style.display = "block"; 
+   
+  for (questionIndex = 0; questionIndex < questionSource.length; questionIndex ++) { 
+    var response = questionSource[questionIndex].question; 
+    if (response = questionSource[questionIndex].answer) { 
+      score++; 
+      answerCheck.innerHTML = ("Correct!");
+    } else {
+      timeLeft -= 10; 
+      answerCheck.innerHTML = ("Incorrect :/"); 
+    }
+  }
+  
+  questionTitle.textContent = questionSource[questionIndex].question;
+    choiceA.textContent = questionSource[questionIndex].choices[0];
+    choiceB.textContent = questionSource[questionIndex].choices[1];
+    choiceC.textContent = questionSource[questionIndex].choices[2];
+    choiceD.textContent = questionSource[questionIndex].choices[3];
+  
+  
+    questionTitle.style.display = "block"; 
 };
 
 function startGame () {  
    
   countdown(); 
   insertQuestion();
+  
+  console.log("what up");
+}; 
+
+function quiz () { 
   for (i = 0; i < questionSource.length; i ++) { 
     var response = questionSource[i].question; 
     if (response = questionSource[i].answer) { 
@@ -120,13 +134,12 @@ function startGame () {
       answerCheck.textContent = ("Incorrect :/"); 
     }
   }
-  timeInterval = setInterval(startTimer, 1000);
-  
-
-
 }; 
 
+function highscore () { 
+
+}
 
 
+startButton.addEventListener("click", startGame); 
 
-startButton.eventListener("click", startGame);
