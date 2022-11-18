@@ -24,7 +24,8 @@ var choiceB = document.getElementById("choice-B");
 var choiceC = document.getElementById("choice-C");
 var choiceD = document.getElementById("choice-D"); 
 var answerCheck = document.getElementById("answer-check");
-var questionTitle = document.getElementById("#question-title");
+var questionTitle = document.querySelector("#question-title"); 
+var questionReveal = document.querySelector("#questions");
 
 var questionSource = [ 
     { question: "Question 1 = What does HTML stand for?", 
@@ -37,8 +38,8 @@ var questionSource = [
     },
     
     { question: "Which symbol is used for comments on Javascript?",
-        choices: [ "A. //", "B. --", "C. #", "D. *" ],
-        answer: "A"
+    choices: [ "A. //", "B. --", "C. #", "D. *" ],
+    answer: "A"
     },
     
 
@@ -66,6 +67,14 @@ var questionSource = [
     },
 
 ] 
+// begins the game once button is pressed
+function startGame () {  
+   
+  countdown(); 
+  insertQuestion();
+  console.log(timeLeft);
+  
+};  
 
 function countdown() {
   
@@ -92,36 +101,45 @@ function countdown() {
 
 
 function insertQuestion() { 
-  header.style.display = "none";
-   
+  header.style.display = "none"; 
+  questionReveal.style.display = "block";
+  console.log(questionTitle);
   for (questionIndex = 0; questionIndex < questionSource.length; questionIndex ++) { 
-    var response = questionSource[questionIndex].question; 
-    if (response = questionSource[questionIndex].answer) { 
-      score++; 
-      answerCheck.innerHTML = ("Correct!");
-    } else {
-      timeLeft -= 10; 
-      answerCheck.innerHTML = ("Incorrect :/"); 
-    }
-  }
-  
-  questionTitle.textContent = questionSource[questionIndex].question;
+    
+
+    // click on answer, match with real answer  
+     
+    
+    questionTitle.textContent = questionSource[questionIndex].question;
+   
     choiceA.textContent = questionSource[questionIndex].choices[0];
     choiceB.textContent = questionSource[questionIndex].choices[1];
     choiceC.textContent = questionSource[questionIndex].choices[2];
     choiceD.textContent = questionSource[questionIndex].choices[3];
   
+    if (questionSource[questionIndex].answer === questionSource[questionIndex].choices) { 
+      score++; 
+      answerCheck.innerHTML = ("Correct!");
+    } else {
+      timeLeft -= 10; 
+      answerCheck.innerHTML = ("Incorrect :/"); 
+    };
+  };
   
-    questionTitle.style.display = "block"; 
 };
 
-function startGame () {  
-   
-  countdown(); 
-  insertQuestion();
-  
-  console.log("what up");
-}; 
+
+function checkQuestion (){ 
+  if (questionSource[questionIndex].answer === questionSource[questionIndex].choices) { 
+    score++; 
+    answerCheck.innerHTML = ("Correct!");
+  } else {
+    timeLeft -= 10; 
+    answerCheck.innerHTML = ("Incorrect :/"); 
+  };
+};
+
+
 
 function quiz () { 
   for (i = 0; i < questionSource.length; i ++) { 
@@ -133,13 +151,28 @@ function quiz () {
       timeLeft -= 10; 
       answerCheck.textContent = ("Incorrect :/"); 
     }
-  }
+  };
 }; 
 
 function highscore () { 
+  localStorage.setItem("initials");
+};
 
-}
-
+function chooseA (event) { 
+  questionSource.choices[0];
+};
+function chooseB (event) { 
+  questionSource.choices[1];
+}; 
+function chooseC (event) { 
+  questionSource.choices[2];
+}; 
+function chooseD (event) { 
+  questionSource.choices[3];
+};
 
 startButton.addEventListener("click", startGame); 
-
+choiceA.addEventListener("click", chooseA);
+choiceB.addEventListener("click", chooseB);
+choiceC.addEventListener("click", chooseC);
+choiceD.addEventListener("click", chooseD);
