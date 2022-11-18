@@ -10,7 +10,8 @@ I have created a webpage that (ideally) goes through a series of multiple choice
 As of writing this README, my webpage is not functioning. most of the code is written out but there's alot of errors when it is ran. I clearly have a lot to learn on utilizing javascript. Hopefully I can continue to work on it and get it running but as of the due date it is incomplete. 
 
 # usage 
-https://github.com/wburnton/JS-Quiz 
+https://github.com/wburnton/JS-Quiz  
+https://wburnton.github.io/JS-Quiz/
 
 ![alt text](assets/screenshot.png)
 
