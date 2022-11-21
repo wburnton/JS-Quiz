@@ -17,8 +17,8 @@ var title = document.querySelector("title");
 var description = document.querySelector("description"); 
 var initialsInput = document.querySelector("initials"); 
 var score = 0;  
-var timeLeft = 80; 
-var questionIndex = 0; 
+ 
+let questionIndex = 0; 
 var choiceA = document.getElementById("choice-A"); 
 var choiceB = document.getElementById("choice-B"); 
 var choiceC = document.getElementById("choice-C");
@@ -63,22 +63,20 @@ var questionSource = [
     answer: "D"
     }, 
     { question: "How is an if statement written?", 
-    choices: ["A. if {i = 0};", "B. if = (i = 0)", "C. if (i = 0) {}", "D. if.i = 0"],
+    choices: ["A. if {i = 0};", "B. if = (i = 0)", "C. if (i = 0) {}", "D. if.i = 0"], 
+    answer: "C"
     },
 
 ] 
 // begins the game once button is pressed
-function startGame () {  
-   
-  countdown(); 
-  insertQuestion();
-  console.log(timeLeft);
-  
-};  
+
+let timeLeft = 80; 
 
 function countdown() {
-  
+  console.log(timeLeft);
+   
   var timeInterval = setInterval(function () {
+    console.log(timeLeft);
     if (timeLeft > 1) {
       
       timerCount.textContent = timeLeft + ' seconds remaining';
@@ -92,19 +90,25 @@ function countdown() {
       clearInterval(timeInterval);
       
      
-    }
+    };
   }, 1000);
 
-
+   
 }; 
 
-
+function startGame () {  
+  //console.log(timeLeft);
+  countdown(); 
+  insertQuestion();
+  //console.log(timeLeft);
+  
+}; 
 
 function insertQuestion() { 
   header.style.display = "none"; 
   questionReveal.style.display = "block";
   console.log(questionTitle);
-  for (questionIndex = 0; questionIndex < questionSource.length; questionIndex ++) { 
+  //for (let i = 0; i < questionSource.length; i ++) { 
     
 
     // click on answer, match with real answer  
@@ -117,62 +121,94 @@ function insertQuestion() {
     choiceC.textContent = questionSource[questionIndex].choices[2];
     choiceD.textContent = questionSource[questionIndex].choices[3];
   
-    if (questionSource[questionIndex].answer === questionSource[questionIndex].choices) { 
-      score++; 
-      answerCheck.innerHTML = ("Correct!");
-    } else {
-      timeLeft -= 10; 
-      answerCheck.innerHTML = ("Incorrect :/"); 
-    };
-  };
+    
+  //};
   
 };
 
 
-function checkQuestion (){ 
-  if (questionSource[questionIndex].answer === questionSource[questionIndex].choices) { 
-    score++; 
-    answerCheck.innerHTML = ("Correct!");
-  } else {
-    timeLeft -= 10; 
-    answerCheck.innerHTML = ("Incorrect :/"); 
-  };
-};
 
 
 
-function quiz () { 
-  for (i = 0; i < questionSource.length; i ++) { 
-    var response = questionSource[i].question; 
-    if (response = questionSource[i].answer) { 
-      score++; 
-      answerCheck.textContent = ("Correct!");
-    } else {
-      timeLeft -= 10; 
-      answerCheck.textContent = ("Incorrect :/"); 
-    }
-  };
-}; 
+
+
 
 function highscore () { 
   localStorage.setItem("initials");
 };
 
-function chooseA (event) { 
-  questionSource.choices[0];
-};
-function chooseB (event) { 
-  questionSource.choices[1];
-}; 
-function chooseC (event) { 
-  questionSource.choices[2];
-}; 
-function chooseD (event) { 
-  questionSource.choices[3];
-};
+function checkAnswer (event) { 
+  answerCheck.innerHTML = "";
+  console.log(event.target.innerHTML.split(".")); 
+  console.log(questionIndex); 
+  console.log(questionSource[questionIndex]);
+  let userChoice = event.target.innerHTML.split(".")[0];
+  let correctAnswer = questionSource[questionIndex].answer
+  if (userChoice === correctAnswer){ 
+    alert("Correct Answer")
+    score++; 
+    answerCheck.innerHTML = ("Correct!");
+    questionIndex ++;
+    insertQuestion();
+  } else { 
+    alert("Incorrect Answer")
+    timeLeft -= 10; 
+    answerCheck.innerHTML = ("Incorrect :/");
+    questionIndex ++;
+    insertQuestion();
+  }
+}
+
+// function chooseA (event) { 
+//   console.log(event.target.innerHTML.split(".")); 
+//   let userChoice = event.target.innerHTML.split(".")[0];
+//   let correctAnswer = questionSource[questionIndex].answer
+//   if (userChoice === correctAnswer){ 
+//     alert("Correct Answer")
+//     score++; 
+//     answerCheck.innerHTML = ("Correct!");
+//   } else { 
+//     alert("Incorrect Answer")
+//     timeLeft -= 10; 
+//     answerCheck.innerHTML = ("Incorrect :/");
+//   }
+// };
+// function chooseB (event) { 
+//   let userChoice = event.target.innerHTML.split(".")[0];
+//   let correctAnswer = questionSource[questionIndex].answer
+//   if (userChoice === correctAnswer){ 
+//     alert("Correct Answer")
+//     score++; 
+//     answerCheck.innerHTML = ("Correct!");
+//   } else { 
+//     alert("Incorrect Answer")
+//   }
+// }; 
+// function chooseC (event) { 
+//   let userChoice = event.target.innerHTML.split(".")[0];
+//   let correctAnswer = questionSource[questionIndex].answer
+//   if (userChoice === correctAnswer){ 
+//     alert("Correct Answer")
+//     score++; 
+//     answerCheck.innerHTML = ("Correct!");
+//   } else { 
+//     alert("Incorrect Answer")
+//   }
+// }; 
+// function chooseD (event) { 
+//   let userChoice = event.target.innerHTML.split(".")[0];
+//   let correctAnswer = questionSource[questionIndex].answer
+//   if (userChoice === correctAnswer){ 
+//     alert("Correct Answer")
+//     score++; 
+//     answerCheck.innerHTML = ("Correct!");
+//   } else { 
+//     alert("Incorrect Answer")
+//   }
+// };
 
 startButton.addEventListener("click", startGame); 
-choiceA.addEventListener("click", chooseA);
-choiceB.addEventListener("click", chooseB);
-choiceC.addEventListener("click", chooseC);
-choiceD.addEventListener("click", chooseD);
+choiceA.addEventListener("click", checkAnswer);
+choiceB.addEventListener("click", checkAnswer);
+choiceC.addEventListener("click", checkAnswer);
+choiceD.addEventListener("click", checkAnswer);
