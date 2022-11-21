@@ -13,9 +13,11 @@ var header = document.getElementById("header");
 var timerCount = document.getElementById("timer-count"); 
 var timer ; 
 var startButton = document.querySelector(".start-button"); 
+var enterScore = document.querySelector("enter-score");
 var title = document.querySelector("title");
 var description = document.querySelector("description"); 
 var initialsInput = document.querySelector("initials"); 
+var highScore = document.getElementById("highscore");
 var score = 0;  
  
 let questionIndex = 0; 
@@ -73,10 +75,10 @@ var questionSource = [
 let timeLeft = 80; 
 
 function countdown() {
-  console.log(timeLeft);
+  //console.log(timeLeft);
    
   var timeInterval = setInterval(function () {
-    console.log(timeLeft);
+    //console.log(timeLeft);
     if (timeLeft > 1) {
       
       timerCount.textContent = timeLeft + ' seconds remaining';
@@ -88,8 +90,9 @@ function countdown() {
      
       timerCount.textContent = '';
       clearInterval(timeInterval);
+      highScore.style.display = "block"; 
+      questionReveal.style.display = "none";
       
-     
     };
   }, 1000);
 
@@ -107,22 +110,22 @@ function startGame () {
 function insertQuestion() { 
   header.style.display = "none"; 
   questionReveal.style.display = "block";
-  console.log(questionTitle);
-  //for (let i = 0; i < questionSource.length; i ++) { 
     
-
-    // click on answer, match with real answer  
      
     
-    questionTitle.textContent = questionSource[questionIndex].question;
+  questionTitle.textContent = questionSource[questionIndex].question;
    
-    choiceA.textContent = questionSource[questionIndex].choices[0];
-    choiceB.textContent = questionSource[questionIndex].choices[1];
-    choiceC.textContent = questionSource[questionIndex].choices[2];
-    choiceD.textContent = questionSource[questionIndex].choices[3];
+  choiceA.textContent = questionSource[questionIndex].choices[0];
+  choiceB.textContent = questionSource[questionIndex].choices[1];
+  choiceC.textContent = questionSource[questionIndex].choices[2];
+  choiceD.textContent = questionSource[questionIndex].choices[3];
+
+  if (questionIndex > questionSource.length) {  
+    highScore.style.display = "block"; 
+    questionReveal.style.display = "none";
+  };
   
-    
-  //};
+  
   
 };
 
@@ -134,14 +137,15 @@ function insertQuestion() {
 
 
 function highscore () { 
-  localStorage.setItem("initials");
+  localStorage.setItem("text", "initials"); 
+  highScore.style.display = "none";
 };
 
 function checkAnswer (event) { 
   answerCheck.innerHTML = "";
-  console.log(event.target.innerHTML.split(".")); 
-  console.log(questionIndex); 
-  console.log(questionSource[questionIndex]);
+  //console.log(event.target.innerHTML.split(".")); 
+  //console.log(questionIndex); 
+  //console.log(questionSource[questionIndex]);
   let userChoice = event.target.innerHTML.split(".")[0];
   let correctAnswer = questionSource[questionIndex].answer
   if (userChoice === correctAnswer){ 
@@ -156,59 +160,21 @@ function checkAnswer (event) {
     answerCheck.innerHTML = ("Incorrect :/");
     questionIndex ++;
     insertQuestion();
-  }
-}
+  };
+  if (questionIndex > questionSource.length) { 
+    highscore (); 
+    highScore.style.display = "block"; 
+    questionReveal.style.display = "none";
+  };
+  
+  
+};
 
-// function chooseA (event) { 
-//   console.log(event.target.innerHTML.split(".")); 
-//   let userChoice = event.target.innerHTML.split(".")[0];
-//   let correctAnswer = questionSource[questionIndex].answer
-//   if (userChoice === correctAnswer){ 
-//     alert("Correct Answer")
-//     score++; 
-//     answerCheck.innerHTML = ("Correct!");
-//   } else { 
-//     alert("Incorrect Answer")
-//     timeLeft -= 10; 
-//     answerCheck.innerHTML = ("Incorrect :/");
-//   }
-// };
-// function chooseB (event) { 
-//   let userChoice = event.target.innerHTML.split(".")[0];
-//   let correctAnswer = questionSource[questionIndex].answer
-//   if (userChoice === correctAnswer){ 
-//     alert("Correct Answer")
-//     score++; 
-//     answerCheck.innerHTML = ("Correct!");
-//   } else { 
-//     alert("Incorrect Answer")
-//   }
-// }; 
-// function chooseC (event) { 
-//   let userChoice = event.target.innerHTML.split(".")[0];
-//   let correctAnswer = questionSource[questionIndex].answer
-//   if (userChoice === correctAnswer){ 
-//     alert("Correct Answer")
-//     score++; 
-//     answerCheck.innerHTML = ("Correct!");
-//   } else { 
-//     alert("Incorrect Answer")
-//   }
-// }; 
-// function chooseD (event) { 
-//   let userChoice = event.target.innerHTML.split(".")[0];
-//   let correctAnswer = questionSource[questionIndex].answer
-//   if (userChoice === correctAnswer){ 
-//     alert("Correct Answer")
-//     score++; 
-//     answerCheck.innerHTML = ("Correct!");
-//   } else { 
-//     alert("Incorrect Answer")
-//   }
-// };
+
 
 startButton.addEventListener("click", startGame); 
 choiceA.addEventListener("click", checkAnswer);
 choiceB.addEventListener("click", checkAnswer);
 choiceC.addEventListener("click", checkAnswer);
-choiceD.addEventListener("click", checkAnswer);
+choiceD.addEventListener("click", checkAnswer); 
+enterScore.addEventListener("click", highscore);
